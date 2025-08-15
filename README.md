@@ -1,6 +1,6 @@
 # Chest X-ray Pneumonia Classifier (ResNet50/timm + Grad-CAM + PR-AUC + Docker)
 
-A complete, hiring-manager-friendly medical imaging project:
+A complete medical imaging project:
 
 - Transfer learning with ResNet/timm backbones
 - Robust training loop with early stopping, mixed precision, cosine LR
