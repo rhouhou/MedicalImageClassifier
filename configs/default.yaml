@@ -1,0 +1,33 @@
+seed: 42
+
+paths:
+  data_dir: data/chest_xray
+  outputs_dir: outputs
+  ckpt_dir: outputs/checkpoints
+  figures_dir: outputs/figures
+  logs_dir: outputs/logs
+
+training:
+  batch_size: 32
+  num_workers: 4
+  epochs: 20
+  lr: 3e-4
+  weight_decay: 1e-4
+  warmup_epochs: 1
+  mixed_precision: true
+  early_stopping_patience: 4
+  class_weighted_loss: true
+  use_focal_loss: false
+  scheduler: cosine
+
+model:
+  arch: resnet50 # or: convnext_tiny, tf_efficientnet_b0, ...
+  pretrained: true
+  num_classes: 2
+
+augment:
+  image_size: 224
+  hflip: 0.5
+  rotation: 7
+  brightness: 0.1
+  contrast: 0.1
