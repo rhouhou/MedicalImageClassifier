@@ -1,5 +1,7 @@
 # MedicalImageClassifier
 
+![CI](https://github.com/rhouhou/MedicalImageClassifier/actions/workflows/ci.yml/badge.svg)
+
 A reproducible, explainable, and deployment-ready medical image classification pipeline for chest X-ray pneumonia detection.
 
 This project demonstrates an end-to-end deep learning workflow for medical image classification, including data loading, transfer learning, imbalance-aware training, evaluation with medical-ML-relevant metrics, Grad-CAM explainability, model export, Docker support, testing, and responsible model documentation.
