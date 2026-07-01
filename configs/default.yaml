@@ -6,6 +6,7 @@ paths:
   ckpt_dir: outputs/checkpoints
   figures_dir: outputs/figures
   logs_dir: outputs/logs
+  metrics_dir: outputs/metrics
 
 training:
   batch_size: 4

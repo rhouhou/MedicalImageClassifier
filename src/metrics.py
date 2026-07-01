@@ -1,5 +1,5 @@
 from sklearn.metrics import (
-    accuracy_score, roc_auc_score, roc_curve, confusion_matrix,
+    accuracy_score, roc_auc_score, average_precision_score, roc_curve, confusion_matrix,
     precision_recall_curve, brier_score_loss
 )
 import numpy as np
@@ -8,16 +8,25 @@ from pathlib import Path
 
 
 def compute_metrics(y_true, y_prob, threshold=0.5):
+    y_true = np.array(y_true)
+    y_prob = np.array(y_prob)
+
     y_pred = (y_prob >= threshold).astype(int)
+
     acc = accuracy_score(y_true, y_pred)
     try:
         auc = roc_auc_score(y_true, y_prob)
     except ValueError:
         auc = float('nan')
-    cm = confusion_matrix(y_true, y_pred)
-    pr_p, pr_r, _ = precision_recall_curve(y_true, y_prob)
-    pr_auc = float(np.trapz(pr_p, pr_r))
+    
+    try:
+        pr_auc = average_precision_score(y_true, y_prob)
+    except ValueError:
+        pr_auc = float('nan')
+
     brier = brier_score_loss(y_true, y_prob)
+    cm = confusion_matrix(y_true, y_pred)
+   
     return {"accuracy": acc, "auc": auc, "pr_auc": pr_auc, "brier": brier, "confusion_matrix": cm}
 
 

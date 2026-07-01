@@ -7,6 +7,11 @@ from torch.cuda.amp import GradScaler, autocast
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 import torch.nn as nn
+import argparse
+import json
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+import os
 
 from .data import build_dataloaders
 from .model import build_model
@@ -48,12 +53,12 @@ def evaluate(model, loader, criterion, device):
         probs.append(p); labels.append(targets.cpu().numpy())
     return running_loss / len(loader.dataset), np.concatenate(probs), np.concatenate(labels)
 
-
 def main(cfg_path: str = 'configs/default.yaml'):
     with open(cfg_path, 'r') as f: cfg = yaml.safe_load(f)
     set_seed(cfg['seed'])
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     paths = cfg['paths']
+    os.makedirs(paths['metrics_dir'], exist_ok=True)
     train_loader, val_loader, test_loader = build_dataloaders(
         paths['data_dir'], cfg['training']['batch_size'], cfg['training']['num_workers'], cfg['augment']['image_size']
     )
@@ -91,13 +96,65 @@ def main(cfg_path: str = 'configs/default.yaml'):
 
     state = torch.load(ckpt_dir / 'best.pt', map_location=device)
     model.load_state_dict(state['model_state'])
+
     test_loss, test_prob, test_true = evaluate(model, test_loader, criterion, device)
     test_metrics = compute_metrics(test_true, test_prob)
+
     print('TEST:', test_metrics)
+
     plot_roc(test_true, test_prob, figures_dir.as_posix(), 'roc_test.png')
     plot_pr(test_true, test_prob, figures_dir.as_posix(), 'pr_test.png')
+
+    metrics_path = Path(paths['metrics_dir']) / 'test_metrics.json'
+
+    clean_metrics = {}
+
+    for key, value in test_metrics.items():
+        if isinstance(value, np.ndarray):
+            clean_metrics[key] = value.tolist()
+        else:
+            clean_metrics[key] = float(value)
+
+    clean_metrics['test_loss'] = float(test_loss)
+    clean_metrics['model'] = cfg['model']['arch']
+    clean_metrics['threshold'] = 0.5
+
+    with open(metrics_path, 'w') as f:
+        json.dump(clean_metrics, f, indent=2)
+    
+    print(f"Saved test metrics to {metrics_path}")
+
+    test_prob_array = np.array(test_prob)
+    test_true_array = np.array(test_true)
+
+    test_pred = (test_prob_array >= 0.5).astype(int)
+    cm = confusion_matrix(test_true_array, test_pred)
+
+    disp = ConfusionMatrixDisplay(
+        confusion_matrix=cm, 
+        display_labels=['NORMAL', 'PNEUMONIA']
+    )
+    disp.plot(values_format='d')
+    plt.title('Confusion Matrix - Test Set')
+    plt.tight_layout()
+    plt.savefig(figures_dir / 'confusion_matrix.png', dpi=200)
+    plt.close()
+
+    print(f"Saved confusion matrix to {figures_dir / 'confusion_matrix.png'}")
+
     writer.close()
 
 
 if __name__ == '__main__':
-    main()
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--config', 
+        type=str, 
+        default='configs/default.yaml', 
+        help='Path to YAML config file',
+    )
+    args = parser.parse_args()
+
+    main(args.config)

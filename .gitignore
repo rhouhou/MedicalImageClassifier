@@ -3,13 +3,11 @@ outputs/checkpoints/
 *.pt
 *.pth
 *.onnx
+
 __pycache__/
 .venv/
+.DS_Store
+
 .ipynb_checkpoints/
 wandb/
 mlruns/
-.DS_Store
-
-!outputs/figures/
-!outputs/figures/*.png
-!outputs/metrics/test_metrics.json
