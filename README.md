@@ -330,6 +330,45 @@ The app takes a chest X-ray image as input and returns the predicted probability
 
 ---
 
+## Command-Line Inference
+
+A command-line inference script is included for testing the trained model on a single image without using the Gradio interface.
+
+This is useful for quick local testing, debugging, or environments where launching a web app is not necessary.
+
+Example:
+
+```bash
+python -m src.predict_image \
+  --image path/to/image.jpeg \
+  --ckpt outputs/checkpoints/best.pt \
+  --arch resnet18
+```
+
+Example using a test image:
+
+```bash
+python -m src.predict_image \
+  --image data/chest_xray/test/PNEUMONIA/person1_bacteria_1.jpeg \
+  --ckpt outputs/checkpoints/best.pt \
+  --arch resnet18
+```
+
+The script returns:
+
+```text
+Prediction: PNEUMONIA
+NORMAL probability: 0.1234
+PNEUMONIA probability: 0.8766
+```
+
+The checkpoint file is not committed to GitHub because trained model files can be large. To use command-line inference, first train the model locally or place a compatible checkpoint at:
+
+```text
+outputs/checkpoints/best.pt
+```
+---
+
 ## ONNX Export
 
 The trained model can be exported to ONNX for deployment-oriented workflows.

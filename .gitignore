@@ -7,6 +7,7 @@ outputs/checkpoints/
 __pycache__/
 .venv/
 .DS_Store
+**/.DS_Store
 
 .ipynb_checkpoints/
 wandb/
