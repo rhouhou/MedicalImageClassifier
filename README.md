@@ -154,6 +154,56 @@ pytest
 
 ---
 
+## Makefile Commands
+
+Common project workflows can be run using the included `Makefile`. This provides shorter commands for installation, testing, training, explainability, export, and inference.
+
+Install dependencies:
+
+```bash
+make install
+```
+
+Run tests:
+
+```bash
+make test
+```
+
+Run a local CPU smoke-training workflow:
+
+```bash
+make train-smoke
+```
+
+Generate Grad-CAM examples after training:
+
+```bash
+make gradcam
+```
+
+Export the trained PyTorch checkpoint to ONNX:
+
+```bash
+make export-onnx
+```
+
+Launch the Gradio inference app:
+
+```bash
+make app
+```
+
+Run command-line inference on a single image:
+
+```bash
+make predict IMAGE=path/to/image.jpeg
+```
+
+These commands are wrappers around the main Python entry points and are intended to make the repository easier to use and reproduce.
+
+---
+
 ## Configuration Files
 
 This project uses YAML configuration files.

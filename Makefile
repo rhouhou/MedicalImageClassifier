@@ -1,17 +1,29 @@
-.PHONY: install train tune lint fmt test export app
+.PHONY: install test train-smoke gradcam export-onnx app predict clean
+
 install:
-	python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && pre-commit install
-train:
-	python src/train.py
- tune:
-	python src/tune.py
-lint:
-	ruff check . && mypy src || true
-fmt:
-	black .
+	python -m pip install --upgrade pip
+	python -m pip install -r requirements.txt
+
 test:
-	pytest -q
-export:
-	./scripts/export_onnx.sh
+	pytest
+
+train-smoke:
+	python -m src.train --config configs/smoke_cpu.yaml
+
+gradcam:
+	python -m src.generate_gradcam_examples --config configs/smoke_cpu.yaml
+
+export-onnx:
+	python -m src.export --ckpt outputs/checkpoints/best.pt --out outputs/checkpoints/model.onnx --arch resnet18
+
 app:
-	python src/app.py --ckpt outputs/checkpoints/best.pt
+	python -m src.app --ckpt outputs/checkpoints/best.pt --arch resnet18
+
+predict:
+	python -m src.predict_image --image $(IMAGE) --ckpt outputs/checkpoints/best.pt --arch resnet18
+
+clean:
+	rm -rf __pycache__
+	rm -rf src/__pycache__
+	rm -rf src/tests/__pycache__
+	rm -rf .pytest_cache
