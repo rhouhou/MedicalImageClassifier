@@ -1,21 +1,36 @@
 # Model Card: Chest X-ray Pneumonia Classifier
 
+## Model Details
+- Model architecture:
+- Backbone:
+- Input size:
+- Framework:
+- Training dataset:
+
 ## Intended Use
+This model is intended for educational and research demonstration of medical image classification workflows.
 
-Educational and research purposes only; not for clinical use.
+## Not Intended For
+This model is not intended for clinical diagnosis, treatment decisions, or deployment in real medical settings.
 
-## Data
+## Training Data
+Describe the dataset source and structure.
 
-Public chest X-ray dataset split into train/val/test. Possible selection bias by device/site/age.
+## Evaluation Data
+Describe train/validation/test split.
 
-## Performance
+## Metrics
+Include Accuracy, ROC-AUC, PR-AUC, Brier score, and confusion matrix.
 
-Report Accuracy, ROC-AUC, PR-AUC, Brier. Add 95% CIs via bootstrapping if possible.
+## Explainability
+Describe Grad-CAM and Integrated Gradients.
 
 ## Limitations
-
-Domain shift, label noise, demographic bias. Performance may differ across subpopulations.
+- Dataset bias
+- Domain shift
+- Label noise
+- Possible shortcut learning
+- Not clinically validated
 
 ## Ethical Considerations
-
-Not a medical device. Predictions must not be used for diagnosis without human oversight.
+Medical AI systems require clinical validation, regulatory review, and expert oversight before use.

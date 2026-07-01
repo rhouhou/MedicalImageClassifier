@@ -7,12 +7,18 @@ paths:
   figures_dir: outputs/figures
   logs_dir: outputs/logs
 
+data:
+  root: data/chest_xray
+  image_size: 224
+  batch_size: 32
+  num_workers: 4
+
 training:
   batch_size: 32
   num_workers: 4
   epochs: 20
-  lr: 3e-4
-  weight_decay: 1e-4
+  lr: 0.0003
+  weight_decay: 0.0001
   warmup_epochs: 1
   mixed_precision: true
   early_stopping_patience: 4
@@ -21,7 +27,7 @@ training:
   scheduler: cosine
 
 model:
-  arch: resnet50 # or: convnext_tiny, tf_efficientnet_b0, ...
+  backbone: resnet50
   pretrained: true
   num_classes: 2
 
@@ -31,3 +37,12 @@ augment:
   rotation: 7
   brightness: 0.1
   contrast: 0.1
+
+loss:
+  name: weighted_cross_entropy
+
+metrics:
+  - accuracy
+  - roc_auc
+  - pr_auc
+  - brier_score

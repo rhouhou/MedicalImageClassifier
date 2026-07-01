@@ -8,10 +8,10 @@ from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 import torch.nn as nn
 
-from data import build_dataloaders
-from model import build_model
-from metrics import compute_metrics, plot_roc, plot_pr
-from losses import build_loss
+from .data import build_dataloaders
+from .model import build_model
+from .metrics import compute_metrics, plot_roc, plot_pr
+from .losses import build_loss
 
 
 def set_seed(seed: int):

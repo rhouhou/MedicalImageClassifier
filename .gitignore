@@ -1,0 +1,15 @@
+data/
+outputs/checkpoints/
+*.pt
+*.pth
+*.onnx
+__pycache__/
+.venv/
+.ipynb_checkpoints/
+wandb/
+mlruns/
+.DS_Store
+
+!outputs/figures/
+!outputs/figures/*.png
+!outputs/metrics/test_metrics.json
