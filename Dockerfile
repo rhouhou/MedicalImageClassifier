@@ -1,7 +1,22 @@
-FROM pytorch/pytorch:2.2.0-cuda12.1-cudnn8-runtime
+FROM python:3.10-slim
+
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
+
 ENV PYTHONUNBUFFERED=1
-CMD ["python", "src/train.py"]
+ENV PIP_NO_CACHE_DIR=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+
+RUN python -m pip install --upgrade pip && \
+    python -m pip install -r requirements.txt
+
+COPY . .
+
+EXPOSE 7860
+
+CMD ["python", "-m", "src.app", "--ckpt", "outputs/checkpoints/best.pt", "--arch", "resnet18"]

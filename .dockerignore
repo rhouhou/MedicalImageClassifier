@@ -1,0 +1,14 @@
+.venv/
+.git/
+__pycache__/
+.pytest_cache/
+.DS_Store
+
+data/
+outputs/checkpoints/
+*.pt
+*.pth
+*.onnx
+
+wandb/
+mlruns/

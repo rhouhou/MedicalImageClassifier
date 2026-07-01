@@ -346,25 +346,41 @@ ONNX export makes the model easier to use outside a pure PyTorch environment.
 
 ## Docker
 
-Build the Docker image:
+A `Dockerfile` is included for future containerized inference.
+
+Docker is useful for packaging the project so that the application can run in a clean, reproducible environment without manually setting up Python dependencies on the host machine. In this repository, Docker is intended mainly for **inference/demo usage**, not for full model training.
+
+At the moment, the main verified workflows are the local Python workflows:
+
+```bash
+python -m src.train --config configs/smoke_cpu.yaml
+python -m src.generate_gradcam_examples --config configs/smoke_cpu.yaml
+python -m src.export --ckpt outputs/checkpoints/best.pt --arch resnet18
+python -m src.app --ckpt outputs/checkpoints/best.pt --arch resnet18
+pytest
+```
+
+Docker testing is planned for a machine with enough available disk space. The Docker image should be tested later using:
 
 ```bash
 docker build -t medical-image-classifier .
 ```
 
-Run the container:
+and, if using a local checkpoint:
 
 ```bash
-docker run -p 7860:7860 medical-image-classifier
+docker run -p 7860:7860 \
+  -v "$(pwd)/outputs/checkpoints:/app/outputs/checkpoints" \
+  medical-image-classifier
 ```
 
-If the app requires a trained checkpoint, place it under:
+The trained checkpoint is not committed to GitHub because model files can be large. Instead, the checkpoint should be mounted into the container from the local machine when running Docker.
 
-```text
-outputs/checkpoints/best.pt
-```
+Current Docker status:
 
-before running the container.
+* Dockerfile included
+* Docker build not yet verified locally due to limited disk space
+* Main training, evaluation, Grad-CAM, ONNX export, Gradio app, tests, and CI are verified without Docker
 
 ---
 
