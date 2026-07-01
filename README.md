@@ -485,24 +485,40 @@ The repository includes tests to verify core functionality such as imports, mode
 
 ---
 
-## Optional: Multi-Agent ML Audit Workflow
+## Multi-Agent ML Audit Workflow
 
-This project can be extended with a lightweight multi-agent workflow for automated ML quality control.
+This repository includes a lightweight multi-agent audit workflow for checking the main artifacts of the medical image classification pipeline.
 
-The agents would not make medical decisions. Instead, they would support engineering and audit tasks.
+The agents do not make medical or clinical decisions. They support ML engineering quality control by checking whether important files, metrics, figures, and documentation are present.
 
-Possible agents:
+The workflow currently includes:
 
-| Agent                | Responsibility                                                          |
-| -------------------- | ----------------------------------------------------------------------- |
-| Data QA Agent        | Check class balance, corrupted files, image sizes, and possible leakage |
-| Training Agent       | Launch training from a selected config                                  |
-| Evaluation Agent     | Compute metrics, curves, threshold analysis, and calibration            |
-| Explainability Agent | Generate Grad-CAM and Integrated Gradients examples                     |
-| Model Card Agent     | Update documentation with results, limitations, and intended-use notes  |
-| Deployment Agent     | Verify ONNX export, Docker build, and inference app                     |
+| Agent                | Responsibility                                                       |
+| -------------------- | -------------------------------------------------------------------- |
+| Data QA Agent        | Checks dataset split folders and class image counts                  |
+| Evaluation Agent     | Reads saved test metrics and flags suspicious metric values          |
+| Explainability Agent | Checks whether ROC, PR, confusion matrix, and Grad-CAM figures exist |
+| Model Card Agent     | Checks whether important model-card sections are present             |
 
-This would demonstrate practical AI orchestration for ML engineering while keeping the project focused on responsible medical-image analysis.
+Run the audit workflow with:
+
+```bash
+make audit
+```
+
+or directly:
+
+```bash
+python -m src.agents.workflow
+```
+
+The generated report is saved to:
+
+```text
+outputs/reports/ml_audit_report.md
+```
+
+This feature is intended to demonstrate a practical multi-agent-style ML audit process for reproducibility, documentation, and model-quality checks.
 
 ---
 

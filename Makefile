@@ -1,4 +1,4 @@
-.PHONY: install test train-smoke gradcam export-onnx app predict clean
+.PHONY: install test train-smoke gradcam export-onnx app predict audit clean
 
 install:
 	python -m pip install --upgrade pip
@@ -21,6 +21,9 @@ app:
 
 predict:
 	python -m src.predict_image --image $(IMAGE) --ckpt outputs/checkpoints/best.pt --arch resnet18
+
+audit:
+	python -m src.agents.workflow
 
 clean:
 	rm -rf __pycache__
