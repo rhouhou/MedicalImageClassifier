@@ -7,27 +7,21 @@ paths:
   figures_dir: outputs/figures
   logs_dir: outputs/logs
 
-data:
-  root: data/chest_xray
-  image_size: 224
-  batch_size: 32
-  num_workers: 4
-
 training:
-  batch_size: 32
-  num_workers: 4
-  epochs: 20
+  batch_size: 4
+  num_workers: 0
+  epochs: 1
   lr: 0.0003
   weight_decay: 0.0001
-  warmup_epochs: 1
-  mixed_precision: true
-  early_stopping_patience: 4
+  warmup_epochs: 0
+  mixed_precision: false
+  early_stopping_patience: 1
   class_weighted_loss: true
   use_focal_loss: false
   scheduler: cosine
 
 model:
-  backbone: resnet50
+  arch: resnet18
   pretrained: true
   num_classes: 2
 
