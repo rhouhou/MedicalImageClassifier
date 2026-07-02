@@ -568,16 +568,17 @@ Any real medical AI system would require:
 
 Planned improvements include:
 
-* full GPU training with ResNet50 or EfficientNet
 * repeated experiments with multiple random seeds
+* comparison across multiple backbones such as ResNet50, EfficientNet, and ConvNeXt
 * threshold optimization for sensitivity/specificity trade-offs
 * calibration plots and temperature scaling
-* stronger error analysis
-* Integrated Gradients visualizations
-* model comparison across multiple backbones
-* lightweight multi-agent audit workflow
-* improved CI smoke tests
+* stronger error analysis of false positives and false negatives
+* Integrated Gradients visualizations in addition to Grad-CAM
+* external validation on another chest X-ray dataset
+* subgroup analysis if metadata is available
+* improved CI smoke tests for inference and export commands
 * optional experiment tracking with MLflow or Weights & Biases
+* optional Docker validation on a machine with enough disk space
 
 ---
 
