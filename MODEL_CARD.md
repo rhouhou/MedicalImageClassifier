@@ -64,7 +64,16 @@ The model has not been clinically validated and should not be used in real medic
 
 ## Dataset
 
-The project expects a chest X-ray dataset organized into train, validation, and test folders:
+This project uses the public [Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia/data) dataset available on Kaggle.
+
+The dataset contains chest X-ray images categorized into two classes:
+
+* `NORMAL`
+* `PNEUMONIA`
+
+The dataset is organized into training, validation, and test folders. It is not included in this repository. Users must download it separately from Kaggle and follow the dataset’s licensing and usage terms.
+
+Expected local structure:
 
 ```text
 data/
@@ -79,8 +88,6 @@ data/
         ├── NORMAL/
         └── PNEUMONIA/
 ```
-
-The dataset is not included in this repository. Users must download the dataset separately and ensure that they comply with the dataset license and usage terms.
 
 ---
 
@@ -129,35 +136,32 @@ The model is evaluated on the test set using:
 
 ---
 
-## Current Smoke-Test Results
+## Current GPU Baseline Results
 
-The following results are from a local CPU smoke-test run using `ResNet18`.
+The following results are from the `v1.1.0` GPU-trained baseline using `ResNet50`.
 
 | Metric      | Value |
 | ----------- | ----: |
-| Accuracy    | 0.840 |
-| ROC-AUC     | 0.941 |
-| PR-AUC      | 0.962 |
-| Brier Score | 0.124 |
+| Accuracy    | 0.902 |
+| ROC-AUC     | 0.971 |
+| PR-AUC      | 0.975 |
+| Brier Score | 0.078 |
+| Test Loss   | 0.457 |
 
 Confusion matrix:
 
 ```text
-[[145,  89],
- [ 11, 379]]
+[[176,  58],
+ [  3, 387]]
 ```
 
-These results are useful for verifying that the full pipeline works, but they should not be interpreted as final model performance.
+The model was trained and evaluated using the project’s GPU configuration:
 
-A stronger final evaluation should include:
+```text
+configs/gpu_resnet50_colab.yaml
+```
 
-* full GPU training
-* larger number of epochs
-* repeated runs with multiple random seeds
-* confidence intervals
-* external validation data
-* subgroup analysis if metadata is available
-* calibration analysis
+These results are useful as a stronger baseline than the initial CPU smoke test, but they should not be interpreted as clinical validation.
 
 ---
 
