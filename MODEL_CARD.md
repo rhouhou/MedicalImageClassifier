@@ -64,7 +64,16 @@ The model has not been clinically validated and should not be used in real medic
 
 ## Dataset
 
-The project expects a chest X-ray dataset organized into train, validation, and test folders:
+This project uses the public [Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia/data) dataset available on Kaggle.
+
+The dataset contains chest X-ray images categorized into two classes:
+
+* `NORMAL`
+* `PNEUMONIA`
+
+The dataset is organized into training, validation, and test folders. It is not included in this repository. Users must download it separately from Kaggle and follow the dataset’s licensing and usage terms.
+
+Expected local structure:
 
 ```text
 data/
@@ -79,8 +88,6 @@ data/
         ├── NORMAL/
         └── PNEUMONIA/
 ```
-
-The dataset is not included in this repository. Users must download the dataset separately and ensure that they comply with the dataset license and usage terms.
 
 ---
 

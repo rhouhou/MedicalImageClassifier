@@ -104,7 +104,24 @@ MedicalImageClassifier/
 
 ## Dataset
 
-This project expects the chest X-ray dataset to be organized as follows:
+This project uses the public [Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia/data) dataset available on Kaggle.
+
+Dataset reference:
+
+* **Dataset:** Chest X-Ray Images (Pneumonia)
+* **Kaggle uploader:** Paul Mooney
+* **Task:** Binary chest X-ray classification
+* **Classes:** `NORMAL`, `PNEUMONIA`
+* **Image format:** JPEG chest X-ray images
+* **Expected structure:** train, validation, and test folders
+
+The dataset is not included in this repository. Users should download it separately from Kaggle and place it under:
+
+```text
+data/chest_xray/
+```
+
+Expected folder structure:
 
 ```text
 data/
@@ -120,13 +137,7 @@ data/
         └── PNEUMONIA/
 ```
 
-The dataset is not included in this repository. Users should download the chest X-ray pneumonia dataset separately and place it under:
-
-```text
-data/chest_xray/
-```
-
-The dataset folder is ignored by Git to avoid uploading large files and to respect dataset licensing.
+The dataset is excluded from GitHub to avoid uploading large files and to respect the dataset’s original distribution and licensing terms.
 
 ---
 

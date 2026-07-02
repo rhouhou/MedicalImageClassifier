@@ -3,6 +3,7 @@ outputs/checkpoints/
 *.pt
 *.pth
 *.onnx
+*.zip
 
 __pycache__/
 .venv/
