@@ -288,21 +288,22 @@ The model is evaluated using several metrics:
 
 ## Current Results
 
-The following results are from a local CPU smoke-test run using `ResNet18`.
-They demonstrate that the full training and evaluation pipeline works.
+The following results are from the `v1.1.0` GPU-trained baseline using `ResNet50`.
 
-| Model              | Accuracy | ROC-AUC | PR-AUC | Brier Score |
-| ------------------ | -------: | ------: | -----: | ----------: |
-| ResNet18 smoke run |    0.840 |   0.941 |  0.962 |       0.124 |
+| Model                 | Accuracy | ROC-AUC | PR-AUC | Brier Score |
+| --------------------- | -------: | ------: | -----: | ----------: |
+| ResNet50 GPU baseline |    0.902 |   0.971 |  0.975 |       0.078 |
 
-Confusion matrix from the smoke-test run:
+Confusion matrix from the test set:
 
 ```text
-[[145,  89],
- [ 11, 379]]
+[[176,  58],
+ [  3, 387]]
 ```
 
-These results should not be interpreted as final clinical performance. A full benchmark should be run with a stronger configuration, repeated seeds, and a GPU-trained model.
+This baseline improves on the initial CPU smoke-test run and demonstrates that the full training, evaluation, explainability, and reporting workflow can run on a GPU-backed environment.
+
+These results should still not be interpreted as clinical performance. A clinically meaningful evaluation would require external validation, repeated runs, subgroup analysis where metadata is available, expert review, and prospective validation.
 
 ---
 
